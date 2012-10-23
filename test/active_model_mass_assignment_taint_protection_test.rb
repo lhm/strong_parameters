@@ -3,6 +3,9 @@ require 'test_helper'
 class Person
   include ActiveModel::MassAssignmentSecurity
   include ActiveModel::ForbiddenAttributesProtection
+
+  attr_accessor :a
+  attr_accessible :a
   
   public :sanitize_for_mass_assignment
 end
