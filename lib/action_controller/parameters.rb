@@ -44,7 +44,7 @@ module ActionController
         case filter
         when Symbol, String then
           params[filter] = self[filter] if has_key?(filter)
-          keys.grep(/\A#{Regexp.escape(filter)}\(\d+[if]?\)\z/).each { |key| params[key] = self[key] }
+          keys.grep(/\A#{Regexp.escape(filter.to_s)}\(\d+[if]?\)\z/).each { |key| params[key] = self[key] }
         when Hash then
           self.slice(*filter.keys).each do |key, value|
             return unless value
@@ -72,7 +72,7 @@ module ActionController
 
     def fetch(key, *args)
       convert_hashes_to_parameters(key, super)
-    rescue KeyError
+    rescue KeyError, IndexError
       raise ActionController::ParameterMissing.new(key)
     end
 
